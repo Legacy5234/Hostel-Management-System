@@ -1,0 +1,56 @@
+{% extends 'includes/layout_a.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <h4 class="text-3xl font-bold text-center mb-8">
+        <i class="fas fa-hotel text-blue-800 text-3xl"></i> Available Hostels
+    </h4>
+
+    <!-- Hostel Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% if hostels %}
+            {% for hostel in hostels %}
+            <div class="card p-6 rounded-lg shadow-lg overflow-hidden transition duration-300 transform hover:scale-105">
+                <div class="container mx-auto py-8">
+                    <!-- Hostel Name -->
+                    <h2 class="text-3xl font-semibold text-gray-800 text-center flex items-center justify-center space-x-3 mb-6">
+                        <i class="fas fa-hotel text-blue-800 text-4xl"></i>
+                        <span class="text-xl">{{ hostel.hostel_name }}</span>
+                    </h2>
+                
+                    <!-- Hostel Address -->
+                    <p class="text-gray-600 text-center text-lg mb-4 flex justify-center items-center space-x-2">
+                        <i class="fas fa-map-marker-alt text-red-500 text-lg"></i>
+                        <span>{{ hostel.location }}</span>
+                    </p>
+                
+                    <!-- Hostel Capacity -->
+                    <p class="text-gray-600 text-center text-lg mb-4 flex justify-center items-center space-x-2">
+                        <i class="fas fa-users text-green-500 text-lg"></i>
+                        <span>Capacity: <strong>{{ hostel.capacity }}</strong></span>
+                    </p>
+                
+                    <!-- Available Rooms -->
+                    <p class="text-gray-600 text-center text-lg mb-8 flex justify-center items-center space-x-2">
+                        <i class="fas fa-door-open text-yellow-500 text-lg"></i>
+                        <span>Available Rooms: <strong>{{ hostel.rooms.count }}</strong></span>
+                    </p>
+                </div>            
+
+                <div class="flex justify-center">
+                    <a href="{% url 'hostel_detail' hostel.id %}" class="inline-block bg-blue-800 text-white py-2 px-4 rounded-full text-sm flex items-center space-x-2 hover:bg-blue-600 focus:outline-none">
+                        <i class="fas fa-eye"></i>
+                        <span>View Rooms</span>
+                    </a>
+                </div>
+                
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No Hostel at the moment</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'includes/layout_a.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto p-8 bg-gradient-to-r from-blue-50 via-white to-blue-50 shadow-lg rounded-lg">
+    <h1 class="text-3xl font-extrabold text-blue-800 mb-6 flex items-center text-center">
+        <i class="fas fa-exclamation-circle text-blue-600 mr-2"></i> Submit a Room Complaint
+    </h1>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        <!-- Title Field -->
+        <div class="mb-4">
+            <label for="title" class="block text-lg font-medium text-gray-700">
+                <i class="fas fa-heading text-blue-500 mr-2"></i> Title
+            </label>
+            {{ form.title }}
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-4">
+            <label for="description" class="block text-lg font-medium text-gray-700">
+                <i class="fas fa-align-left text-green-500 mr-2"></i> Description
+            </label>
+            {{ form.description }}
+        </div>
+
+        <!-- Image Upload Field -->
+        <div class="mb-4">
+            <label for="images" class="block text-lg font-medium text-gray-700">
+                <i class="fas fa-upload text-orange-500 mr-2"></i> Upload Images
+            </label>
+            <input 
+                type="file" 
+                name="images" 
+                id="images" 
+                multiple 
+                class="block w-full border rounded-lg p-3 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            >
+            <p class="text-sm text-gray-500 mt-1">You can upload multiple images (e.g., damaged items, maintenance issues).</p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-right">
+            <button type="submit" class="bg-gradient-to-r from-blue-500 to-green-500 text-white px-6 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-green-600">
+                <i class="fas fa-paper-plane mr-2"></i> Submit Complaint
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
