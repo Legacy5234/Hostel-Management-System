@@ -15,10 +15,14 @@ def admin_manage_users_in_room(request):
     complaint_count = Complaint.objects.count()
 
     # Filter users based on admin's role
-    if request.user.is_male_potter:
-        users = User.objects.filter(is_superuser=False, gender='Male')  # Male users only
-    elif request.user.is_female_potter:
-        users = User.objects.filter(is_superuser=False, gender='Female')  # Female users only
+    if request.user.is_male_potter_new_boys:
+        users = User.objects.filter(is_superuser=False, gender='Male') 
+    elif request.user.is_male_potter_old_boys:
+        users = User.objects.filter(is_superuser=False, gender='Male')
+    elif request.user.is_female_potter_amazon:
+        users = User.objects.filter(is_superuser=False, gender='Female')
+    elif request.user.is_female_potter_serena:
+        users = User.objects.filter(is_superuser=False, gender='Female')  
     else:
         users = User.objects.none()  # If the admin has no specific role, show no users
 

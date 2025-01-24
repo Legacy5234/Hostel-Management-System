@@ -50,7 +50,6 @@ def bulk_import_students(request):
         if form.is_valid():
             csv_file = request.FILES['csv_file']
 
-            # Decode the file and read it
             try:
                 decoded_file = csv_file.read().decode('utf-8').splitlines()
                 reader = csv.DictReader(decoded_file)
@@ -63,42 +62,38 @@ def bulk_import_students(request):
                     matric_number = row.get('matric_number')
                     first_name = row.get('first_name')
                     last_name = row.get('last_name')
-                    gender = row.get('gender', '').capitalize()  # Ensure gender value matches choices
-                    dept = row.get('dept', '').strip()  # Read and sanitize the dept field
-                    password = row.get('password', matric_number)  # Default password is the matric number
+                    gender = row.get('gender', '').capitalize() 
+                    dept = row.get('dept', '').strip() 
+                    password = row.get('password', matric_number)  
 
-                    # Validate required fields
+            
                     if not matric_number or not first_name or not last_name or not gender or not dept:
                         errors.append(f"Missing data in row: {row}")
                         error_count += 1
                         continue
 
-                    # Validate gender
                     if gender not in ['Male', 'Female']:
                         errors.append(f"Invalid gender '{gender}' for matric number {matric_number}.")
                         error_count += 1
                         continue
 
-                    # Validate department
                     if len(dept) == 0:
                         errors.append(f"Invalid or missing department for matric number {matric_number}.")
                         error_count += 1
                         continue
 
-                    # Check if the matric number already exists
                     if User.objects.filter(matric_number=matric_number).exists():
                         errors.append(f"Matric number {matric_number} already exists.")
                         error_count += 1
                         continue
 
-                    # Create the student
                     try:
                         User.objects.create_user(
                             matric_number=matric_number,
                             first_name=first_name,
                             last_name=last_name,
                             gender=gender,
-                            dept=dept,  # Include department in user creation
+                            dept=dept, 
                             password=password,
                         )
                         success_count += 1
@@ -106,7 +101,6 @@ def bulk_import_students(request):
                         errors.append(f"Error creating student for matric number {matric_number}: {str(e)}")
                         error_count += 1
 
-                # Add success and error messages
                 if success_count > 0:
                     messages.success(request, f"{success_count} students imported successfully.")
                 if error_count > 0:
@@ -128,19 +122,26 @@ def bulk_import_students(request):
 #---------------------------------------------------------------------------------------------------------
 @login_required(login_url='a_userauthapp:login')
 def profile_view(request, matric_number=None):
-    # Get the user based on the matric number or use the logged-in user
     if matric_number:
         user = get_object_or_404(User, matric_number=matric_number)
         profile = user.profile
     else:
         profile = request.user.profile
 
-    # Fetch rooms for dropdown selection
-    rooms = Room.objects.all()
-    
+    if request.user.is_superuser and request.user.is_male_potter_new_boys:
+        rooms = Room.objects.filter(hostel__hostel_name='New Boys', hostel__gender='Male')
+    elif request.user.is_superuser and request.user.is_male_potter_old_boys:
+        rooms = Room.objects.filter(hostel__hostel_name='Old Boys', hostel__gender='Male')
+    elif request.user.is_superuser and request.user.is_female_potter_amazon:
+        rooms = Room.objects.filter(hostel__hostel_name='Amazon', hostel__gender='Female')
+    elif request.user.is_superuser and request.user.is_female_potter_serena:
+        rooms = Room.objects.filter(hostel__hostel_name='Serena', hostel__gender='Female')
+    else:
+        rooms = Room.objects.none()
+        
     if request.method == 'POST':
-        action = request.POST.get('action')  # 'add' or 'remove'
-        room_id = request.POST.get('room')  # Room ID selected from dropdown
+        action = request.POST.get('action')
+        room_id = request.POST.get('room')
 
         if not room_id:
             messages.error(request, "Please select a valid room.")
@@ -148,9 +149,9 @@ def profile_view(request, matric_number=None):
             room = get_object_or_404(Room, id=room_id)
 
             if action == 'add':
-                if user.room:  # User already assigned to a room
+                if user.room:  
                     messages.error(request, f'{user.first_name} {user.last_name} is already assigned to Room {user.room.room_number}.')
-                elif room.occupants >= room.capacity:  # Room is full
+                elif room.occupants >= room.capacity:
                     messages.error(request, f'Room {room.room_number} is full.')
                 else:
                     # Assign user to the room

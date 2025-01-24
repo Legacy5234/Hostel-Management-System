@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from environ import Env
+import dj_database_url
 
 env = Env()
 Env.read_env()
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
 
     # THIRD PARTY PACKAGES
     'django_cleanup.apps.CleanupConfig',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -95,6 +97,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+POSTGRES_LOCALLY = True
+
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
 
 # Password validation

@@ -15,15 +15,23 @@
                 <h1 class="text-2xl md:text-3xl font-bold text-gray-900">
                     {{ user.first_name }} {{ user.last_name }}
                 </h1>
-                <p class="mt-2 text-gray-700">
-                    <strong>Role:</strong> <span class="font-medium">Hostel Adminstrator</span>
+                <p class="text-gray-600 flex items-center mt-2">
+                    <i class="fas fa-user-tag mr-2 text-blue-500"></i>
+                    <span>
+                        Role : Potter <br/>
+                        {% if user.is_male_potter_new_boys %}
+                            New Boys Hostel
+                        {% elif user.is_male_potter_old_boys %}
+                            Old Boys Hostel
+                        {% elif user.is_female_potter_amazon %}
+                            Amazon Hostel
+                        {% elif user.is_female_potter_serena %}
+                            Serena Hostel
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </span>
                 </p>
-                <!-- <p class="text-gray-700">
-                    <strong>Email:</strong> 
-                    <a href="mailto:{{ request.user.email }}" class="text-blue-600 hover:underline">
-                        {{ request.user.email }}
-                    </a>
-                </p> -->
             </div>
         </div>
     

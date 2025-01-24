@@ -3,13 +3,21 @@ from django.db import models
 #---------------------------------------------------------------------------------------------------------
 # HOSTEL MODEL
 #---------------------------------------------------------------------------------------------------------
+HOSTELS = (
+    ('New Boys','New Boys'),
+    ('Old Boys','Old Boys'),
+    ('Amazon','Amazon'),
+    ('Serena','Serena'),
+)
+
 class Hostel(models.Model):
-    hostel_name = models.CharField(max_length=100)
+    hostel_name = models.CharField(max_length=100, choices=HOSTELS)
+    block = models.CharField(max_length=25, null=True)
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female')])
     location = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.hostel_name
+        return f"{self.hostel_name} - {self.block}"
     
 
 #---------------------------------------------------------------------------------------------------------
@@ -29,7 +37,7 @@ class Room(models.Model):
         return self.occupants < self.capacity
 
     def __str__(self):
-        return f"{self.hostel.hostel_name} - Room {self.room_number}"
+        return f"{self.hostel.hostel_name} - {self.hostel.block} - Room {self.room_number}"
     
 #---------------------------------------------------------------------------------------------------------
 # COMPLAINT MODEL

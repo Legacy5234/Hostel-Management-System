@@ -64,8 +64,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
-    is_male_potter = models.BooleanField(default=False)
-    is_female_potter = models.BooleanField(default=False)
+    is_male_potter_new_boys = models.BooleanField(default=False)
+    is_male_potter_old_boys = models.BooleanField(default=False)
+
+    is_female_potter_amazon = models.BooleanField(default=False)
+    is_female_potter_serena = models.BooleanField(default=False)
 
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
 
