@@ -36,11 +36,11 @@
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
 
                     {% if user.is_authenticated %}
-                        <img class="h-12 w-12 rounded-full object-cover" src="{{ user.profile.image_url }}" alt="test-account"/>
+                        <img class="h-12 w-12 rounded-full object-cover" src="{{ user.profile.image_url }}" alt="profile-image"/>
                         {{ user.first_name|title }} {{ user.last_name|title }}
                         <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
                     {% else %}
-                        <img class="h-12 w-12 rounded-full object-cover" src="{% static 'images/default-profilepic.png' %}" alt="test-account"/>
+                        <img class="h-12 w-12 rounded-full object-cover" src="{% static 'images/default-profilepic.png' %}" alt="profile-image"/>
                         student
                         <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/777777/expand-arrow.png"/>
                     {% endif %}

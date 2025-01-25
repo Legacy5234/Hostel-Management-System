@@ -10,7 +10,7 @@
         <div class="flex items-center justify-between border-b pb-6">
             <div class="flex items-center space-x-6">
                 <!-- Profile Picture -->
-                {% if profile.image.url %}
+                {% if profile.image_url %}
                 <img src="{{ profile.image_url }}" alt="Profile Picture" 
                      class="w-24 h-24 rounded-full object-cover border-2 border-blue-500 shadow-sm">
                 <div>
@@ -65,10 +65,10 @@
             <div class="flex items-center justify-between border-b pb-6">
                 <div class="flex items-center space-x-6">
                     <!-- Profile Picture -->
-                    {% if profile.image.url %}
+                    {% if profile.image_url %}
                     <img src="{{ profile.image_url }}" alt="Profile Picture" class="w-28 h-28 rounded-full object-cover border-2 border-blue-500 shadow">
                     {% else %}
-                    <img src="{{ profile.image_url }}" alt="Profile Picture" class="w-28 h-28 rounded-full object-cover border-2 border-blue-500 shadow">
+                    <img src="{% static 'images/default-profilepic.png' %}" alt="Profile Picture" class="w-28 h-28 rounded-full object-cover border-2 border-blue-500 shadow">
                     {% endif %}
 
                     <div>
