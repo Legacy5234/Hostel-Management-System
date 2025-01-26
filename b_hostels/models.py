@@ -1,5 +1,9 @@
 from django.db import models
 
+# Images Directory For Users
+def user_directory_path(instance, filename):
+    return f'user_{instance.user.id}/{filename}'
+
 #---------------------------------------------------------------------------------------------------------
 # HOSTEL MODEL
 #---------------------------------------------------------------------------------------------------------
@@ -42,11 +46,17 @@ class Room(models.Model):
 #---------------------------------------------------------------------------------------------------------
 # COMPLAINT MODEL
 #---------------------------------------------------------------------------------------------------------
+STATUS = (
+    ('Pending', 'Pending'),
+    ('Approved', 'Approved'),
+)
+
 class Complaint(models.Model):
     user = models.ForeignKey('a_userauthapp.User', on_delete=models.CASCADE, related_name='complaints')
     room = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='complaints')
     title = models.CharField(max_length=255)
     description = models.TextField()
+    status = models.CharField(max_length=50, null=True, choices=STATUS, default='Pending')
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -55,8 +65,12 @@ class Complaint(models.Model):
 
 class ComplaintImage(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, related_name='images')
-    images = models.ImageField(upload_to='complaint_images/')
+    images = models.ImageField(upload_to=user_directory_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Image for {self.complaint.title}"
+    
+    @property
+    def user(self):
+        return self.complaint.user

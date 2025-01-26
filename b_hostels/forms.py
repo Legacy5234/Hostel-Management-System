@@ -17,3 +17,14 @@ class ComplaintForm(forms.ModelForm):
                 'placeholder': 'Enter detailed description of the issue',
             })
         }
+
+
+class ComplaintStatusForm(forms.ModelForm):
+    class Meta:
+        model = Complaint
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(attrs={
+                'class': 'form-select block w-full mt-1',
+            }),
+        }

@@ -6,7 +6,7 @@ import csv
 from .forms import StudentProfileForm,CSVUploadForm
 from .models import User,StudentProfile
 
-from b_hostels.models import Room
+from b_hostels.models import Room,Complaint
 
 # Create your views here.
 #---------------------------------------------------------------------------------------------------------
@@ -182,7 +182,6 @@ def profile_view(request, matric_number=None):
 #---------------------------------------------------------------------------------------------------------
 # STUDENT PROFILE EDIT VIEW
 #---------------------------------------------------------------------------------------------------------
-
 def edit_profile(request, matric_number):
     try:
         user = User.objects.get(matric_number=matric_number)  # Get the user by matric_number
@@ -213,4 +212,11 @@ def edit_profile(request, matric_number):
 
     return render(request, 'a_userauthapp/edit_profile.html', context)
 
+
+#---------------------------------------------------------------------------------------------------------
+# STUDENT ROOM COMPLAIN VIEW
+#---------------------------------------------------------------------------------------------------------
+def student_room_complaint(request):
+    complaints = Complaint.objects.filter(user=request.user)
+    return render(request, 'b_hostel/student_complain.html', {'complaints':complaints})
 

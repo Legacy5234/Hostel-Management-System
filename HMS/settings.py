@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'cloudinary_storage',
     'cloudinary',
 
@@ -153,7 +154,7 @@ MEDIA_URL = 'media/'
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': env('CLOUD_NAME'),
     'API_KEY': env('CLOUD_API_KEY'),
-    'API_SECRET': env('CLOUD_API_SECRET')
+    'API_SECRET': env('CLOUD_API_SECRET'),
 }
 
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:

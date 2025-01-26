@@ -10,15 +10,9 @@
         <div class="flex items-center justify-between border-b pb-6">
             <div class="flex items-center space-x-6">
                 <!-- Profile Picture -->
-                {% if profile.image_url %}
                 <img src="{{ profile.image_url }}" alt="Profile Picture" 
                      class="w-24 h-24 rounded-full object-cover border-2 border-blue-500 shadow-sm">
                 <div>
-                {% else %}
-                <img src="{% static 'images/default-profilepic.png' %}" alt="Profile Picture" 
-                     class="w-24 h-24 rounded-full object-cover border-2 border-blue-500 shadow-sm">
-                <div>
-                {% endif %}
                     <!-- User Info -->
                     <h2 class="text-2xl font-bold text-gray-800">{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
                     <p class="text-gray-600 flex items-center mt-2">
@@ -65,12 +59,7 @@
             <div class="flex items-center justify-between border-b pb-6">
                 <div class="flex items-center space-x-6">
                     <!-- Profile Picture -->
-                    {% if profile.image_url %}
                     <img src="{{ profile.image_url }}" alt="Profile Picture" class="w-28 h-28 rounded-full object-cover border-2 border-blue-500 shadow">
-                    {% else %}
-                    <img src="{% static 'images/default-profilepic.png' %}" alt="Profile Picture" class="w-28 h-28 rounded-full object-cover border-2 border-blue-500 shadow">
-                    {% endif %}
-
                     <div>
                         <!-- User Info -->
                         <h2 class="text-2xl font-bold text-gray-800">{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
@@ -154,6 +143,29 @@
                             <p class="text-gray-800 mt-1">{{ profile.user.room.hostel.hostel_name }} : {{ profile.user.room.hostel.block }}</p>
                         </div>
                     </div>
+
+                    <!-- Complaint Info -->
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+                        <div class="flex flex-col items-center">
+                            <!-- Icon Section -->
+                            <div class="">
+                                <a href="{% url 'a_userauthapp:student_room_complaint' %}" 
+                                class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition">
+                                    <i class="fas fa-clipboard-list text-3xl"></i>
+                                </a>                               
+                            </div>
+                            <!-- Title and Count Section -->
+                            <h4 class="text-md font-semibold text-gray-800 mb-2">Total Complaints</h4>
+                            <a href="{% url 'a_userauthapp:student_room_complaint' %}" 
+                               class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition">
+                                {{ profile.user.complaints.count }}
+                            </a>
+                        </div>
+                        <!-- Description Section -->
+                        <p class="mt-4 text-sm text-gray-600 text-center">
+                            View your complaints.
+                        </p>
+                    </div>                                       
                 </div>
                 {% else %}
                 <p class="text-lg text-red-500 font-medium">Currently not assigned to any room.</p>
