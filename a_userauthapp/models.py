@@ -87,7 +87,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 def user_directory_path(instance, filename):
     return f'user_{instance.user.id}/{filename}'
 
-from django.templatetags.static import static
 
 CURRENT_LEVEL = (
     ('100','100'),
@@ -107,10 +106,5 @@ class StudentProfile(models.Model):
     def __str__(self):
         return f"{self.user.first_name}'s Profile"
     
-    @property
-    def image_url(self):
-        if self.image:  
-            return self.image.url
-        return static('images/default-profilepic.png')
 
    
