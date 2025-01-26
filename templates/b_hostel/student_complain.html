@@ -51,15 +51,7 @@
             {% endif %}
 
             <div class="mt-4 flex items-center space-x-2">
-                <span class="text-sm font-semibold text-gray-800">STATUS:</span>
-                <span class="px-4 py-1 text-sm font-medium rounded-full 
-                            {% if complaint_status == 'Pending' %}
-                                bg-yellow-500 text-white
-                            {% else %}
-                                bg-green-500 text-white
-                            {% endif %}">
-                    {{ complaint_status }}
-                </span>
+                <span class="text-sm font-semibold text-gray-800">STATUS : {{ complaint.status }}</span>
             </div>            
             
         </div>
