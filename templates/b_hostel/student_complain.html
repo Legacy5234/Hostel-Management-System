@@ -58,11 +58,7 @@
                             {% else %}
                                 bg-green-500 text-white
                             {% endif %}">
-                    {% if complaint_status == 'Pending' %}
-                        Pending
-                    {% else %}
-                        Approved
-                    {% endif %}
+                    {{ complaint_status }}
                 </span>
             </div>            
             

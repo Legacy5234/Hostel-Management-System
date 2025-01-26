@@ -109,6 +109,8 @@ class StudentProfile(models.Model):
     
     @property
     def image_url(self):
-        return self.image.url if self.image else static('images/default-profilepic.png')
+        if self.image:  
+            return self.image.url
+        return static('images/default-profilepic.png')
 
    
