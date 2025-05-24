@@ -83,11 +83,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 #---------------------------------------------------------------------------------------------------------
 # STUDENT PROFILE MODEL
 #---------------------------------------------------------------------------------------------------------
-# Images Directory For Users
-def user_directory_path(instance, filename):
-    return f'user_{instance.user.id}/{filename}'
-
-
 CURRENT_LEVEL = (
     ('100','100'),
     ('200','200'),
@@ -98,7 +93,7 @@ CURRENT_LEVEL = (
 )
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    image = models.ImageField(upload_to='HMS-profileimage/', blank=True, null=True)
     current_level = models.CharField(max_length=3, choices=CURRENT_LEVEL, null=True, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     address = models.TextField(blank=True, null=True)

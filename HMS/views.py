@@ -28,7 +28,8 @@ def homepage(request):
 
         elif request.user.is_superuser and request.user.is_female_potter_serena:
             hostels = Hostel.objects.filter(hostel_name='Serena', gender='Female').order_by('id')
-
+        else:
+            hostels = Hostel.objects.all()
     context = {
         'hostels': hostels
     }

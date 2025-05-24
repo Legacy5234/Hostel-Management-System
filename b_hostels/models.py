@@ -1,9 +1,4 @@
 from django.db import models
-
-# Images Directory For Users
-def user_directory_path(instance, filename):
-    return f'user_{instance.user.id}/{filename}'
-
 #---------------------------------------------------------------------------------------------------------
 # HOSTEL MODEL
 #---------------------------------------------------------------------------------------------------------
@@ -65,7 +60,7 @@ class Complaint(models.Model):
 
 class ComplaintImage(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, related_name='images')
-    images = models.ImageField(upload_to=user_directory_path)
+    images = models.ImageField(upload_to='HMS-complaintimages/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

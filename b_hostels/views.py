@@ -26,7 +26,7 @@ def admin_manage_users_in_room(request):
     elif request.user.is_female_potter_serena:
         users = User.objects.filter(is_superuser=False, gender='Female')  
     else:
-        users = User.objects.none()  # If the admin has no specific role, show no users
+        users = User.objects.all()
 
     context = {
         'rooms': rooms,
